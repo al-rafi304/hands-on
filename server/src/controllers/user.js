@@ -11,10 +11,8 @@ export const register = async (req, res) => {
         location, 
         bio, 
         skills, 
-        causesSupported 
+        causesSupport 
     } = req.body;
-
-    // validation!!
     
     if (await User.findOne({ email: email })) {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "An acount with this email already exists" });
@@ -27,7 +25,7 @@ export const register = async (req, res) => {
         location: location,
         bio: bio,
         skills: skills,
-        causesSupported: causesSupported
+        causesSupport: causesSupport
     });
 
     const token = utils.generateJWT(user._id);
@@ -38,8 +36,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
-
-    // validation!!
 
     const user = await User.findOne({ email: email });
     if (!user) {

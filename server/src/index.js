@@ -1,6 +1,9 @@
 import express from 'express';
+import 'express-async-errors';
 import * as db from './db.js';
 import * as env from './env.js';
+
+import userRoutes from './routes/user.js';
 
 const server = express();
 
@@ -10,7 +13,7 @@ const start = async () => {
     server.use(express.json());
 
     // Routes
-    server.get('/', (req, res) => res.send("Hello World!"));
+    server.use('/api/v1/user', userRoutes);
 
     await db.connectDB();
     server.listen(env.SERVER_PORT, () => {

@@ -1,0 +1,32 @@
+services:
+  app:
+    build: ./server
+    container_name: server
+    ports:
+      - "3000:3000"  # Expose port 3000 on localhost
+    env_file:
+      - .env
+    environment:
+      - SERVER_PORT=3000
+    depends_on:
+      - mongo
+    volumes:
+      - ./server:/usr/src/app  # Mount the application code for hot-reloading
+      - /usr/src/app/node_modules  # Prevents overwriting node_modules during mounting
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 10s
+      retries: 3 
+
+volumes:
+  mongo_data:

@@ -8,7 +8,7 @@ export const generateHash = async (string) => {
     return hashed;
 }
 
-export const generateJWT = async (userID) => {
+export const generateJWT = (userID) => {
     const token = jwt.sign(
         { id: userID },
         env.JWT_SECRET,

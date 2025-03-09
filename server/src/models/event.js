@@ -34,10 +34,9 @@ export const EventSchema = new mongoose.Schema({
         trim: true
     },
     category: {
-        type: [String],
+        type: String,
         required: true,
         enum: constants.CATEGORY,
-        default: []
     },
 
 }, { timestamps: true });

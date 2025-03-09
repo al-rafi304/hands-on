@@ -44,7 +44,7 @@ export const register = [
     ,
     body('causesSupport')
         .isArray().withMessage('Causes Support should be an array')
-        .custom(val => val.every(cause => constants.CAUSES_SUPPORT.includes(cause)))
+        .custom(val => val.every(cause => constants.CATEGORY.includes(cause)))
         .withMessage('Each cause should be a valid cause')
     ,
 ]
@@ -91,7 +91,7 @@ export const updateUser = [
     body('causesSupport')
         .optional()
         .isArray().withMessage('Causes Support should be an array')
-        .custom(val => val.every(cause => constants.CAUSES_SUPPORT.includes(cause)))
+        .custom(val => val.every(cause => constants.CATEGORY.includes(cause)))
         .withMessage('Each cause should be a valid cause')
     ,
     

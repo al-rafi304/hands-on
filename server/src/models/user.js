@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
     },
     causesSupport: {
         type: [String],
-        enum: constants.CAUSES_SUPPORT,
+        enum: constants.CATEGORY,
         default: []
     },
     volunteerHours: {

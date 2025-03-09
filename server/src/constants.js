@@ -1,4 +1,4 @@
-export const CAUSES_SUPPORT = [
+export const CATEGORY = [
     "Environment",
     "Education",
     "Healthcare",

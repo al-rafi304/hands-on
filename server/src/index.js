@@ -5,6 +5,7 @@ import * as db from './db.js';
 import * as env from './env.js';
 
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/user.js';
 
 const server = express();
 const corsOptions = {
@@ -13,16 +14,18 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }
+const baseEndpoint = '/api/v1';
 
 const start = async () => {
     
     // Middlewares
     server.use(cors(corsOptions));
     server.use(express.json());
-
+    
     // Routes
-    server.use('/api/v1/auth', authRoutes);
-
+    server.use(`${baseEndpoint}/auth`, authRoutes);
+    server.use(`${baseEndpoint}/user`, userRoutes);
+    
     await db.connectDB();
     server.listen(env.SERVER_PORT, () => {
         console.log(`Server started on http://localhost:${env.SERVER_PORT}`);

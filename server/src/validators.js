@@ -61,6 +61,42 @@ export const login = [
         .notEmpty().withMessage('Password is required')
 ]
 
+export const updateUser = [
+    body('name')
+        .optional()
+        .trim()
+        .isString().withMessage('Name should be a string')
+    ,
+    body('email')
+        .optional()
+        .trim()
+        .toLowerCase()
+        .isEmail().withMessage('Invalid Email format')
+    ,
+    body('location')
+        .optional()
+        .trim()
+    ,
+    body('bio')
+        .optional()
+        .trim()
+        .isString().withMessage('Bio should be a string')
+    ,
+    body('skills')
+        .optional()
+        .isArray().withMessage('Skills should be an array')
+        .custom(value => value.every(skill => typeof skill === 'string'))
+        .withMessage('Each skill should be a string.')
+    ,
+    body('causesSupport')
+        .optional()
+        .isArray().withMessage('Causes Support should be an array')
+        .custom(val => val.every(cause => constants.CAUSES_SUPPORT.includes(cause)))
+        .withMessage('Each cause should be a valid cause')
+    ,
+    
+]
+
 export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

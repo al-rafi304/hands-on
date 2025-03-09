@@ -125,6 +125,12 @@ export const createEvent = [
         .withMessage('Invalid Category')
 ]
 
+export const getEvent = [
+    param('eventId')
+        .notEmpty().withMessage('Event ID is required')
+        .isMongoId().withMessage('Invalid Event ID')
+]
+
 export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

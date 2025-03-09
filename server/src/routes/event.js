@@ -13,8 +13,17 @@ router.route('/').post(
 );
 
 router.route('/:eventId').get(
+    validator.getEvent,
+    validator.validate,
     authenticate,
     event.getEvent
 );
+
+router.route('/:eventId/join').post(
+    validator.getEvent,
+    validator.validate,
+    authenticate,
+    event.joinEvent
+)
 
 export default router;

@@ -37,3 +37,26 @@ export const getEvent = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ event });
 }
+
+export const joinEvent = async (req, res) => {
+    const eventId = req.params.eventId;
+
+    const event = await Event.findById(eventId);
+    if (!event) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
+    }
+
+    const user = await User.findById(req.userId);
+    if (!user) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
+    }
+
+    if (event.attending.includes(user._id)) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "User already attending event" });
+    }
+    
+    event.attending.push(user);
+    await event.save();
+
+    res.status(StatusCodes.OK).json({ msg: "User joined event!" });
+}

@@ -8,6 +8,7 @@ import * as constant from './constants.js';
 import logger from './middlewares/logger.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
+import eventRoutes from './routes/event.js';
 
 const server = express();
 const corsOptions = {
@@ -27,6 +28,7 @@ const start = async () => {
     // Routes
     server.use(`${constant.BASE_API_ROUTE}/auth`, authRoutes);
     server.use(`${constant.BASE_API_ROUTE}/user`, userRoutes);
+    server.use(`${constant.BASE_API_ROUTE}/event`, eventRoutes);
     
     await db.connectDB();
     server.listen(env.SERVER_PORT, () => {

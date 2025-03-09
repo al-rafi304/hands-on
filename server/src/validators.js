@@ -44,7 +44,7 @@ export const register = [
     ,
     body('causesSupport')
         .isArray().withMessage('Causes Support should be an array')
-        .custom(val => val.every(cause => constants.CAUSES_SUPPORT.includes(cause)))
+        .custom(val => val.every(cause => constants.CATEGORY.includes(cause)))
         .withMessage('Each cause should be a valid cause')
     ,
 ]
@@ -91,10 +91,37 @@ export const updateUser = [
     body('causesSupport')
         .optional()
         .isArray().withMessage('Causes Support should be an array')
-        .custom(val => val.every(cause => constants.CAUSES_SUPPORT.includes(cause)))
+        .custom(val => val.every(cause => constants.CATEGORY.includes(cause)))
         .withMessage('Each cause should be a valid cause')
     ,
     
+]
+
+export const createEvent = [
+    body('title')
+        .trim()
+        .notEmpty().withMessage('Title is required')
+        .isString().withMessage('Title should be a string')
+        .isLength({ max: 200 }).withMessage('Title should be less than 200 characters')
+    ,
+    body('description')
+        .trim()
+        .notEmpty().withMessage('Description is required')
+        .isString().withMessage('Description should be a string')
+        .isLength({ max: 1000 }).withMessage('Description should be less than 1000 characters')
+    ,
+    body('date')
+        .notEmpty().withMessage('Date is required')
+        .isISO8601().withMessage('Invalid date format')
+    ,
+    body('location')
+        .trim()
+        .notEmpty().withMessage('Location is required')
+    ,
+    body('category')
+        .isArray().withMessage('Category should be an array')
+        .custom(value => value.every(cat => constants.CATEGORY.includes(cat)))
+        .withMessage('Each category should be a valid category')
 ]
 
 export const validate = (req, res, next) => {

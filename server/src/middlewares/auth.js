@@ -1,8 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import env from '../env.js';
-
-import User from '../models/user.js';
+import * as env from '../env.js';
 
 export const authenticate = async (req, res, next) => {
     try {

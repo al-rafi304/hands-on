@@ -7,6 +7,8 @@ const router = Router();
 
 router.route('/').post(
     authenticate,
+    validator.createEvent,
+    validator.validate,
     event.createEvent
 );
 

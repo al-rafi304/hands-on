@@ -10,4 +10,6 @@ export const CAUSES_SUPPORT = [
     "Mental Health",
     "Arts & Culture",
     "Technology for Good",
-  ];
+];
+
+export const BASE_API_ROUTE = '/api/v1';

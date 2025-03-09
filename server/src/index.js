@@ -3,7 +3,9 @@ import 'express-async-errors';
 import cors from 'cors';
 import * as db from './db.js';
 import * as env from './env.js';
+import * as constant from './constants.js';
 
+import logger from './middlewares/logger.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 
@@ -14,17 +16,17 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }
-const baseEndpoint = '/api/v1';
 
 const start = async () => {
     
     // Middlewares
+    server.use(logger);
     server.use(cors(corsOptions));
     server.use(express.json());
     
     // Routes
-    server.use(`${baseEndpoint}/auth`, authRoutes);
-    server.use(`${baseEndpoint}/user`, userRoutes);
+    server.use(`${constant.BASE_API_ROUTE}/auth`, authRoutes);
+    server.use(`${constant.BASE_API_ROUTE}/user`, userRoutes);
     
     await db.connectDB();
     server.listen(env.SERVER_PORT, () => {

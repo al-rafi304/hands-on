@@ -18,13 +18,8 @@ export const authenticate = async (req, res, next) => {
         }
 
         const verified = jwt.verify(token, env.JWT_SECRET);
-        const user = User.findById(verified.id);
 
-        if (!user) {
-            return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
-        }
-
-        req.user = user;
+        req.userId = verified.id;
         
         next();
     } catch (err) {

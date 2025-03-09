@@ -1,19 +1,19 @@
 import { Router } from "express";
 import * as user from '../controllers/user.js';
 import * as validator from '../validators.js';
+import { authenticate } from '../middlewares/auth.js';
 
 const router = Router();
 
-router.route('/login').post(
-    validator.login,
-    validator.validate,
-    user.login
+router.route('/').get(
+    authenticate,
+    user.getUser
 );
-
-router.route('/register').post(
-    validator.register,
+router.route('/').patch(
+    authenticate,
+    validator.updateUser,
     validator.validate,
-    user.register
+    user.updateUser
 );
 
 export default router;

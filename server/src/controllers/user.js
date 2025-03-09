@@ -1,54 +1,36 @@
-import User from "../models/user.js";
-import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
-import * as utils from '../utils.js';
+import User from '../models/user.js';
 
-export const register = async (req, res) => {
-    const { 
-        name, 
-        email, 
-        password, 
-        location, 
-        bio, 
-        skills, 
-        causesSupport 
-    } = req.body;
-    
-    if (await User.findOne({ email: email })) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ error: "An acount with this email already exists" });
+export const getUser = async (req, res) => {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
     }
-    
-    const user = await User.create({
-        name: name,
-        email: email,
-        password: await utils.generateHash(password),
-        location: location,
-        bio: bio,
-        skills: skills,
-        causesSupport: causesSupport
-    });
 
-    const token = utils.generateJWT(user._id);
-
-    console.log('token generated')
-    res.header('Authorization', `Bearer ${token}`).status(StatusCodes.CREATED).json({ id: user._id });
+    res.status(StatusCodes.OK).json(user);
 }
 
-export const login = async (req, res) => {
-    const { email, password } = req.body;
+export const updateUser = async (req, res) => {
+    const userId = req.userId;
+    const allowedFields = ["name", "email", "location", "bio", "skills", "causesSupported"];
+    const updates = {};
 
-    const user = await User.findOne({ email: email });
-    if (!user) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ error: "Invalid email or password!" });
+    // Filter request body to only include allowed fields
+    Object.keys(req.body).forEach((key) => {
+        if (allowedFields.includes(key)) {
+            updates[key] = req.body[key];
+        }
+    });
+
+    // Prevent empty update request
+    if (Object.keys(updates).length === 0) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "No valid fields to update." });
     }
 
-    const matchPassword = await bcrypt.compare(password, user.password);
-    if (!matchPassword) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ error: "Invalid email or password!" });
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true, select: "-password" });
+    if (!updatedUser) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found." });
     }
 
-    const token = utils.generateJWT(user._id);
-    res.header('Authorization', `Bearer ${token}`).status(StatusCodes.OK).json({ id: user._id });
-
-
+    return res.status(StatusCodes.OK).json({ user: updatedUser });
 }

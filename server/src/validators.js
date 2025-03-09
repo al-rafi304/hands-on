@@ -119,9 +119,10 @@ export const createEvent = [
         .notEmpty().withMessage('Location is required')
     ,
     body('category')
-        .isArray().withMessage('Category should be an array')
-        .custom(value => value.every(cat => constants.CATEGORY.includes(cat)))
-        .withMessage('Each category should be a valid category')
+        .notEmpty().withMessage('Category is required')
+        .isString().withMessage('Category should be a string')
+        .custom(value => constants.CATEGORY.includes(value))
+        .withMessage('Invalid Category')
 ]
 
 export const validate = (req, res, next) => {

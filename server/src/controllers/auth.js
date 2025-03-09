@@ -30,8 +30,10 @@ export const register = async (req, res) => {
 
     const token = utils.generateJWT(user._id);
 
-    console.log('token generated')
-    res.header('Authorization', `Bearer ${token}`).status(StatusCodes.CREATED).json({ user_id: user._id });
+    res.status(StatusCodes.OK).json({
+        user_id: user._id,
+        token: token
+    });
 }
 
 export const login = async (req, res) => {
@@ -48,7 +50,10 @@ export const login = async (req, res) => {
     }
 
     const token = utils.generateJWT(user._id);
-    res.header('Authorization', `Bearer ${token}`).status(StatusCodes.OK).json({ user_id: user._id });
+    res.status(StatusCodes.OK).json({
+        user_id: user._id,
+        token: token
+    });
 
 
 }

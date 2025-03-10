@@ -1,5 +1,5 @@
 services:
-  app:
+  server:
     build: ./server
     container_name: server
     ports:
@@ -29,6 +29,22 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3 
+  
+  client:
+    build: ./client
+    container_name: client
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    environment:
+      - TERM=xterm-256color
+    tty: true
+    depends_on:
+      - server
+    volumes:
+      - ./client:/usr/src/app  # Only needed for development mode
+      - /usr/src/app/node_modules
 
 volumes:
   mongo_data:

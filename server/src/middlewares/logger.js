@@ -27,6 +27,7 @@ export default function logger(req, res, next) {
         const outTime = Date.now();
         const responseTime = outTime - inTime;
         console.log(`${chalk.bold(req.method)} ${chalk.dim(req_path)} ${colorstatus} ${chalk.dim(responseTime + 'ms')}`);
+        req.body ? console.log(`${chalk.dim(JSON.stringify(req.body, null, 2))}`) : null;
     });
 
     next();

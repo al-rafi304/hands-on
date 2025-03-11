@@ -1,6 +1,6 @@
 .env
 .git
 .gitignore
-.vscode
+.vscode/
 Dockerfile
 node_modules/

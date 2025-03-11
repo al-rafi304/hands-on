@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 // import { useAuth } from "../../contexts/AuthContext"
+import { authService } from "../../services/authService"
 import toast from "react-hot-toast"
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
     setIsLoading(true)
 
     try {
-      // await login(email, password)
+      await authService.login(email, password)
       toast.success("Login successful!")
       navigate("/")
     } catch (error) {

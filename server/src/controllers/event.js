@@ -3,7 +3,7 @@ import Event from '../models/event.js';
 import { StatusCodes } from 'http-status-codes';
 
 export const createEvent = async (req, res) => {
-    const { 
+    const {
         title,
         description,
         date,
@@ -15,7 +15,7 @@ export const createEvent = async (req, res) => {
     if (!user) {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
     }
-    
+
     const event = await Event.create({
         organizer: user,
         title: title,
@@ -54,9 +54,26 @@ export const joinEvent = async (req, res) => {
     if (event.attending.includes(user._id)) {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "User already attending event" });
     }
-    
+
     event.attending.push(user);
     await event.save();
 
     res.status(StatusCodes.OK).json({ msg: "User joined event!" });
+}
+
+export const leaveEvent = async (req, res) => {
+    const eventId = req.params.eventId;
+
+    const user = await User.findById(req.userId);
+    if (!user) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
+    }
+
+    await Event.findByIdAndUpdate(
+        eventId,
+        { $pull: { attending: user._id } },
+        { new: true }
+    ).select("attending");
+
+    res.status(StatusCodes.OK).json({ msg: "User left event!" });
 }

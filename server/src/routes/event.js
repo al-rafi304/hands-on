@@ -24,6 +24,13 @@ router.route('/:eventId/join').post(
     validator.validate,
     authenticate,
     event.joinEvent
+);
+
+router.route('/:eventId/leave').post(
+    validator.getEvent,
+    validator.validate,
+    authenticate,
+    event.leaveEvent
 )
 
 export default router;

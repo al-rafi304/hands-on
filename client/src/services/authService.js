@@ -21,5 +21,22 @@ export const authService = {
     } catch (error) {
       throw error
     }
-  }
+  },
+
+  async getCurrentUser() {
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) return null
+
+      const response = await api.get("/user")
+      return response.data
+    } catch (error) {
+      localStorage.removeItem("token")
+      return null
+    }
+  },
+
+  async logout() {
+    localStorage.removeItem("token")
+  },
 }

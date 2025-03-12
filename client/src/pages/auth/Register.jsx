@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-// import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import toast from "react-hot-toast"
-import { authService } from "../../services/authService"
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ const Register = () => {
   const [causesSupport, setCausesSupport] = useState([])
   const [newSkill, setNewSkill] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  // const { register } = useAuth()
+  const { register } = useAuth()
   const navigate = useNavigate()
 
   const CATEGORY = [
@@ -82,7 +81,7 @@ const Register = () => {
 
       console.log(userData)
 
-      await authService.register(userData)
+      await register(userData)
       toast.success("Register button pressed!")
       navigate("/")
     } catch (error) {

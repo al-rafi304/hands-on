@@ -1,14 +1,13 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-// import { useAuth } from "../../contexts/AuthContext"
-import { authService } from "../../services/authService"
+import { useAuth } from "../../contexts/AuthContext"
 import toast from "react-hot-toast"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  // const { login } = useAuth()
+  const { login } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -16,7 +15,7 @@ const Login = () => {
     setIsLoading(true)
 
     try {
-      await authService.login(email, password)
+      await login(email, password)
       toast.success("Login successful!")
       navigate("/")
     } catch (error) {

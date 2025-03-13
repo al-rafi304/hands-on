@@ -19,6 +19,8 @@ router.route('/').get(
 
 router.route('/all').get(
     authenticate,
+    validator.eventFilters,
+    validator.validate,
     event.getAllEvents
 )
 

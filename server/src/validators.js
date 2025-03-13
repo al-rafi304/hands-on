@@ -1,4 +1,4 @@
-import { body, param, validationResult } from 'express-validator';
+import { body, param, query, validationResult } from 'express-validator';
 import * as env from './env.js';
 import * as utils from './utils.js';
 import * as constants from './constants.js';
@@ -129,6 +129,26 @@ export const getEvent = [
     param('eventId')
         .notEmpty().withMessage('Event ID is required')
         .isMongoId().withMessage('Invalid Event ID')
+]
+
+export const eventFilters = [
+    query('category')
+        .optional()
+        .isString().withMessage('Category should be a string')
+        .custom(value => constants.CATEGORY.includes(value))
+        .withMessage('Invalid Category')
+    ,
+    query('location')
+        .optional()
+        .isString().withMessage('Location should be a string')
+    ,
+    query('startDate')
+        .optional()
+        .isISO8601().withMessage('Invalid date format')
+    ,
+    query('endDate')
+        .optional()
+        .isISO8601().withMessage('Invalid date format')
 ]
 
 export const validate = (req, res, next) => {

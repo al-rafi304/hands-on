@@ -39,7 +39,22 @@ export const getEvent = async (req, res) => {
 }
 
 export const getAllEvents = async (req, res) => {
-    const events = await Event.find();
+    const { category, location, startDate, endDate } = req.query;
+    var filter = {};
+
+    if (category) {
+        filter.category = category;
+    }
+    if (location) {
+        filter.location = { $regex: location, $options: "i" };
+    }
+    if (startDate || endDate) {
+        filter.date = {}
+        if (startDate) filter.date.$gte = new Date(startDate);
+        if (endDate) filter.date.$lte = new Date(endDate);
+    }
+
+    const events = await Event.find(filter);
 
     res.status(StatusCodes.OK).json({ events });
 }

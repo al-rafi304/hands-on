@@ -2,9 +2,15 @@ import api from "./api";
 
 const eventService = {
 
-  async getAllEvents() {
+  async getAllEvents(filters = {}) {
     try {
-      const response = await api.get("/event/all")
+      if (filters.category === "") {
+        delete filters.category
+      }
+      if (filters.location === "") {
+        delete filters.location
+      }
+      const response = await api.get("/event/all", { params: filters })
       return response.data.events
     } catch (error) {
       throw error

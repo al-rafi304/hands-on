@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import Navbar from "../../components/Navbar"
 import Sidebar from "../../components/Sidebar"
 import DashboardOverview from "./DashboardOverview"
+import EventsPage from "./EventsPage"
 
 const Dashboard = () => {
   const { currentUser } = useAuth()
@@ -18,6 +19,7 @@ const Dashboard = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <Routes>
                 <Route path="/" element={<DashboardOverview />} />
+                <Route path="/events" element={<EventsPage />} />
               </Routes>
             </div>
           </div>

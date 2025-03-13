@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Calendar, HelpCircle, Users, Award } from "lucide-react"
 import { useAuth } from "../../contexts/AuthContext"
+import eventService from "../../services/eventService"
 
 const DashboardOverview = () => {
   const { currentUser } = useAuth()
@@ -19,7 +20,8 @@ const DashboardOverview = () => {
       try {
 
         // Fetch user events
-        // const userEvents = await eventService.getUserEvents()
+        const userEvents = await eventService.getAttendingEvents()
+        setRecentEvents(userEvents)
         // setRecentEvents(userEvents.slice(0, 3))
 
         // Fetch help requests
@@ -27,11 +29,11 @@ const DashboardOverview = () => {
         // setRecentHelpRequests(helpRequests.slice(0, 3))
 
         // Set stats
-        // setStats({
-        //   upcomingEvents: userEvents.filter((event) => new Date(event.date) > new Date()).length,
-        //   helpRequests: helpRequests.length,
-        //   volunteerHours: 24, // Simulated data
-        // })
+        setStats({
+          upcomingEvents: userEvents.filter((event) => new Date(event.date) > new Date()).length,
+          helpRequests: 4, // Simulated data
+          volunteerHours: 24, // Simulated data
+        })
       } catch (error) {
         console.error("Error fetching dashboard data:", error)
       } finally {
@@ -41,31 +43,6 @@ const DashboardOverview = () => {
 
     fetchDashboardData()
   }, [])
-
-  // Simulated data for development
-  const simulatedEvents = [
-    {
-      id: 1,
-      title: "Beach Cleanup Drive",
-      date: "2023-06-15T09:00:00",
-      location: "Sunset Beach",
-      category: "Environmental",
-    },
-    {
-      id: 2,
-      title: "Food Distribution",
-      date: "2023-06-20T10:00:00",
-      location: "Downtown Community Center",
-      category: "Humanitarian",
-    },
-    {
-      id: 3,
-      title: "Elderly Home Visit",
-      date: "2023-06-25T14:00:00",
-      location: "Sunshine Elderly Care",
-      category: "Healthcare",
-    },
-  ]
 
   const simulatedHelpRequests = [
     {
@@ -212,8 +189,8 @@ const DashboardOverview = () => {
         <h2 className="text-lg font-medium text-gray-900">Your Upcoming Events</h2>
         <div className="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
           <ul className="divide-y divide-gray-200">
-            {simulatedEvents.length > 0 ? (
-              simulatedEvents.map((event) => (
+            {recentEvents.length > 0 ? (
+              recentEvents.map((event) => (
                 <li key={event.id}>
                   <Link to={`/dashboard/events/${event.id}`} className="block hover:bg-gray-50">
                     <div className="px-4 py-4 sm:px-6">

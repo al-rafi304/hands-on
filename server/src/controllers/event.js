@@ -38,6 +38,12 @@ export const getEvent = async (req, res) => {
     res.status(StatusCodes.OK).json({ event });
 }
 
+export const getAllEvents = async (req, res) => {
+    const events = await Event.find();
+
+    res.status(StatusCodes.OK).json({ events });
+}
+
 export const joinEvent = async (req, res) => {
     const eventId = req.params.eventId;
 

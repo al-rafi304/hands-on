@@ -17,6 +17,11 @@ router.route('/').get(
     event.getAttendingEvents,
 );
 
+router.route('/all').get(
+    authenticate,
+    event.getAllEvents
+)
+
 router.route('/:eventId').get(
     validator.getEvent,
     validator.validate,

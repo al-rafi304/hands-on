@@ -83,7 +83,7 @@ const Register = () => {
 
       await register(userData)
       toast.success("Register button pressed!")
-      navigate("/")
+      navigate("/dashboard")
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to register. Please try again.")
     } finally {

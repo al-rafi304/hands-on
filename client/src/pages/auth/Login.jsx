@@ -17,7 +17,7 @@ const Login = () => {
     try {
       await login(email, password)
       toast.success("Login successful!")
-      navigate("/")
+      navigate("/dashboard")
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to login. Please try again.")
     } finally {

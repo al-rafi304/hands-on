@@ -69,3 +69,14 @@ export const leaveEvent = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ msg: "User left event!" });
 }
+
+export const getAttendingEvents = async (req, res) => {
+    const userId = req.userId;
+
+    const events = await Event.find({ attending: { $in: [userId] } });
+    if (!events) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "No events found" });
+    }
+
+    res.status(StatusCodes.OK).json({ events });
+}

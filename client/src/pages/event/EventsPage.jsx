@@ -162,7 +162,7 @@ const EventsPage = () => {
                   <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                   <span>{event.location}</span>
                 </div>
-                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer.name}</div>
+                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer.name }</div>
               </div>
               <div className="bg-gray-50 px-5 py-3">
                 <div className="text-sm">

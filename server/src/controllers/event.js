@@ -62,14 +62,18 @@ export const getAllEvents = async (req, res) => {
 export const joinEvent = async (req, res) => {
     const eventId = req.params.eventId;
 
-    const updatedEvent = await Event.findByIdAndUpdate(
-        eventId,
-        { $addToSet: { attending: req.userId } }, // $addToSet ensures no duplicates
+    const event = await Event.findOneAndUpdate(
+        {
+            _id: eventId,
+            attending: { $nin: [req.userId] },
+            date: { $gte: new Date() }
+        },
+        { $push: { attending: req.userId } },
         { new: true }
-    ).select("attending");
+    );
 
-    if (!updatedEvent) {
-        return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
+    if (!event) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Unable to join event" });
     }
 
     res.status(StatusCodes.OK).json({ msg: "User joined event!" });
@@ -78,14 +82,18 @@ export const joinEvent = async (req, res) => {
 export const leaveEvent = async (req, res) => {
     const eventId = req.params.eventId;
 
-    const updatedEvent = await Event.findByIdAndUpdate(
-        eventId,
+    const event = await Event.findOneAndUpdate(
+        {
+            _id: eventId,
+            attending: { $in: [req.userId] },
+            date: { $gte: new Date() }
+        },
         { $pull: { attending: req.userId } },
         { new: true }
-    ).select("attending");
+    );
 
-    if (!updatedEvent) {
-        return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
+    if (!event) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Unable to leave event" });
     }
 
     res.status(StatusCodes.OK).json({ msg: "User left event!" });

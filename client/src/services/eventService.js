@@ -24,7 +24,16 @@ const eventService = {
     } catch (error) {
       throw error
     }
-  }
+  },
+
+  async createEvent(eventData) {
+    try {
+      const response = await api.post("/event", eventData)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  },
 }
 
 export default eventService;

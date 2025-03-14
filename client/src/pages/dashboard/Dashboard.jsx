@@ -3,16 +3,15 @@ import { useAuth } from "../../contexts/AuthContext"
 import Navbar from "../../components/Navbar"
 import Sidebar from "../../components/Sidebar"
 import DashboardOverview from "./DashboardOverview"
-import EventsPage from "./EventsPage"
+import EventsPage from "../event/EventsPage"
+import CreateEvent from "../event/CreateEvent"
 
 const Dashboard = () => {
-  const { currentUser } = useAuth()
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <Sidebar />
-      <h1>{currentUser.name}</h1>
       <div className="md:pl-64 flex flex-col flex-1">
         <main className="flex-1">
           <div className="py-6">
@@ -20,6 +19,7 @@ const Dashboard = () => {
               <Routes>
                 <Route path="/" element={<DashboardOverview />} />
                 <Route path="/events" element={<EventsPage />} />
+                <Route path="/events/create" element={<CreateEvent />} />
               </Routes>
             </div>
           </div>

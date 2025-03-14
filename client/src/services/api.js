@@ -52,7 +52,7 @@ api.interceptors.response.use(
           toast.error("Server error. Please try again later.")
           break
         default:
-          toast.error(response.data.message || "Something went wrong.")
+          toast.error(response.data.error || "Something went wrong.")
       }
     } else {
       toast.error("Network error. Please check your connection.")

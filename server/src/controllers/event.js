@@ -30,7 +30,7 @@ export const createEvent = async (req, res) => {
 
 export const getEvent = async (req, res) => {
     const eventId = req.params.eventId;
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId).populate('organizer', '_id name');
     if (!event) {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
     }
@@ -54,7 +54,7 @@ export const getAllEvents = async (req, res) => {
         if (endDate) filter.date.$lte = new Date(endDate);
     }
 
-    const events = await Event.find(filter);
+    const events = await Event.find(filter).populate('organizer', '_id name');
 
     res.status(StatusCodes.OK).json({ events });
 }

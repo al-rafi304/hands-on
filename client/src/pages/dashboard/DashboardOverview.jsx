@@ -191,8 +191,8 @@ const DashboardOverview = () => {
           <ul className="divide-y divide-gray-200">
             {recentEvents.length > 0 ? (
               recentEvents.map((event) => (
-                <li key={event.id}>
-                  <Link to={`/dashboard/events/${event.id}`} className="block hover:bg-gray-50">
+                <li key={event._id}>
+                  <Link to={`/dashboard/events/${event._id}`} className="block hover:bg-gray-50">
                     <div className="px-4 py-4 sm:px-6">
                       <div className="flex items-center justify-between">
                         <p className="text-sm font-medium text-primary truncate">{event.title}</p>

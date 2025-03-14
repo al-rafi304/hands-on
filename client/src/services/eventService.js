@@ -2,6 +2,15 @@ import api from "./api";
 
 const eventService = {
 
+  async getEventById(eventId) {
+    try {
+      const response = await api.get(`/event/${eventId}`)
+      return response.data.event
+    } catch (error) {
+      throw error
+    }
+  },
+
   async getAllEvents(filters = {}) {
     try {
       if (filters.category === "") {
@@ -34,6 +43,24 @@ const eventService = {
       throw error
     }
   },
+
+  async joinEvent(eventId) {
+    try {
+      const response = await api.post(`/event/${eventId}/join`)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async leaveEvent(eventId) {
+    try {
+      const response = await api.post(`/event/${eventId}/leave`)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default eventService;

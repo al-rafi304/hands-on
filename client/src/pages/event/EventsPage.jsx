@@ -137,7 +137,7 @@ const EventsPage = () => {
       <div className="mt-6 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {events
           .map((event) => (
-            <div key={event.id} className="bg-white overflow-hidden shadow rounded-lg">
+            <div key={event._id} className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">
                 <div className="flex justify-between">
                   <div className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
@@ -162,12 +162,12 @@ const EventsPage = () => {
                   <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                   <span>{event.location}</span>
                 </div>
-                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer}</div>
+                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer.name}</div>
               </div>
               <div className="bg-gray-50 px-5 py-3">
                 <div className="text-sm">
                   <Link
-                    to={`/dashboard/events/${event.id}`}
+                    to={`/dashboard/events/${event._id}`}
                     className="font-medium text-primary hover:text-primary-dark"
                   >
                     View details

@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar"
 import DashboardOverview from "./DashboardOverview"
 import EventsPage from "../event/EventsPage"
 import CreateEvent from "../event/CreateEvent"
+import EventDetails from "../event/EventDetails"
 
 const Dashboard = () => {
 
@@ -20,6 +21,7 @@ const Dashboard = () => {
                 <Route path="/" element={<DashboardOverview />} />
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/events/create" element={<CreateEvent />} />
+                <Route path="/events/:eventId" element={<EventDetails />} />
               </Routes>
             </div>
           </div>

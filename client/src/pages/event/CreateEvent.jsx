@@ -32,6 +32,7 @@ const CreateEvent = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    console.log(name, value)
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -67,13 +68,10 @@ const CreateEvent = () => {
       const dateTimeString = `${formData.date}T${formData.time}:00`
       const dateObj = new Date(dateTimeString)
 
-      // Format with timezone offset
-      const isoDateTime = dateObj.toISOString().replace("Z", "+06:00")
-
       const eventData = {
         title: formData.title,
         description: formData.description,
-        date: isoDateTime,
+        date: dateObj,
         location: formData.location,
         category: formData.category,
       }

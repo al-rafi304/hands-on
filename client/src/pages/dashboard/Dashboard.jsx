@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom"
-import { useAuth } from "../../contexts/AuthContext"
 import Navbar from "../../components/Navbar"
 import Sidebar from "../../components/Sidebar"
 import DashboardOverview from "./DashboardOverview"
 import EventsPage from "../event/EventsPage"
 import CreateEvent from "../event/CreateEvent"
 import EventDetails from "../event/EventDetails"
+import HelpRequestsPage from "../request/RequestsPage"
 
 const Dashboard = () => {
 
@@ -22,6 +22,7 @@ const Dashboard = () => {
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/events/create" element={<CreateEvent />} />
                 <Route path="/events/:eventId" element={<EventDetails />} />
+                <Route path="/help-requests" element={<HelpRequestsPage />} />
               </Routes>
             </div>
           </div>

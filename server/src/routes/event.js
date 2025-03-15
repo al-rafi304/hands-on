@@ -14,15 +14,15 @@ router.route('/').post(
 
 router.route('/').get(
     authenticate,
-    event.getAttendingEvents,
-);
-
-router.route('/all').get(
-    authenticate,
     validator.eventFilters,
     validator.validate,
     event.getAllEvents
-)
+);
+
+router.route('/attending').get(
+    authenticate,
+    event.getAttendingEvents,
+);
 
 router.route('/:eventId').get(
     validator.getEvent,

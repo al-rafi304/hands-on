@@ -19,7 +19,7 @@ const eventService = {
       if (filters.location === "") {
         delete filters.location
       }
-      const response = await api.get("/event/all", { params: filters })
+      const response = await api.get("/event", { params: filters })
       return response.data.events
     } catch (error) {
       throw error
@@ -28,7 +28,7 @@ const eventService = {
 
   async getAttendingEvents() {
     try {
-      const response = await api.get("/event")
+      const response = await api.get("/event/attending")
       return response.data.events
     } catch (error) {
       throw error

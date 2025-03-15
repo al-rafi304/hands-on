@@ -29,7 +29,7 @@ export const createHelpRequest = async (req, res) => {
 }
 
 export const getAllRequest = async (req, res) => {
-    const { category, location, open } = req.query;
+    const { category, location, open, startDate, endDate } = req.query;
     var filter = {};
 
     if (category) {
@@ -40,6 +40,11 @@ export const getAllRequest = async (req, res) => {
     }
     if (open) {
         filter.is_open = open
+    }
+    if (startDate || endDate) {
+        filter.createdAt = {}
+        if (startDate) filter.createdAt.$gte = new Date(startDate);
+        if (endDate) filter.createdAt.$lte = new Date(endDate);
     }
 
     const helpRequests = await HelpRequest.find(filter).populate('user', '_id name');

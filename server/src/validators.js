@@ -94,7 +94,7 @@ export const updateUser = [
         .custom(val => val.every(cause => constants.CATEGORY.includes(cause)))
         .withMessage('Each cause should be a valid cause')
     ,
-    
+
 ]
 
 export const createEvent = [
@@ -132,6 +132,66 @@ export const getEvent = [
 ]
 
 export const eventFilters = [
+    query('category')
+        .optional()
+        .isString().withMessage('Category should be a string')
+        .custom(value => constants.CATEGORY.includes(value))
+        .withMessage('Invalid Category')
+    ,
+    query('location')
+        .optional()
+        .isString().withMessage('Location should be a string')
+    ,
+    query('startDate')
+        .optional()
+        .isISO8601().withMessage('Invalid date format')
+    ,
+    query('endDate')
+        .optional()
+        .isISO8601().withMessage('Invalid date format')
+]
+
+export const createRequest = [
+    body('title')
+        .trim()
+        .notEmpty().withMessage('Title is required')
+        .isString().withMessage('Title should be a string')
+        .isLength({ max: 200 }).withMessage('Title should be less than 200 characters')
+    ,
+    body('description')
+        .trim()
+        .notEmpty().withMessage('Description is required')
+        .isString().withMessage('Description should be a string')
+        .isLength({ max: 1000 }).withMessage('Description should be less than 1000 characters')
+    ,
+    body('location')
+        .trim()
+        .notEmpty().withMessage('Location is required')
+    ,
+    body('category')
+        .notEmpty().withMessage('Category is required')
+        .isString().withMessage('Category should be a string')
+        .custom(value => constants.CATEGORY.includes(value))
+        .withMessage('Invalid Category')
+    ,
+    body('urgency')
+        .notEmpty().withMessage('Urgency is required')
+        .isString().withMessage('Urgency should be a string')
+        .custom(value => constants.URGENCY.includes(value))
+        .withMessage('Invalid Urgency Level')
+]
+
+export const getRequest = [
+    param('requestId')
+        .notEmpty().withMessage('Help Request ID is required')
+        .isMongoId().withMessage('Invalid Help Request ID')
+]
+
+export const requestFilters = [
+    query('open')
+        .optional()
+        .isBoolean().withMessage('Open should be a boolean')
+    ,
     query('category')
         .optional()
         .isString().withMessage('Category should be a string')

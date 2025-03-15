@@ -34,6 +34,11 @@ export const HelpRequestSchema = new mongoose.Schema({
         required: true,
         enum: constants.CATEGORY,
     },
+    urgency: {
+        type: String,
+        enum: constants.URGENCY,
+        required: true,
+    },
     is_open: {
         type: Boolean,
         default: true

@@ -12,4 +12,10 @@ export const CATEGORY = [
     "Technology for Good",
 ];
 
+export const URGENCY = [
+    "Low",
+    "Medium",
+    "High"
+]
+
 export const BASE_API_ROUTE = '/api/v1';

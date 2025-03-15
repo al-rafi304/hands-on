@@ -7,7 +7,8 @@ export const createHelpRequest = async (req, res) => {
         title,
         description,
         location,
-        category
+        category,
+        urgency
     } = req.body;
 
     const user = await User.findById(req.userId);
@@ -20,7 +21,8 @@ export const createHelpRequest = async (req, res) => {
         title: title,
         description: description,
         location: location,
-        category: category
+        category: category,
+        urgency: urgency
     });
 
     res.status(StatusCodes.CREATED).json({ helpRequest })

@@ -16,6 +16,15 @@ const helpRequestService = {
       throw error
     }
   },
+
+  async createHelpRequest(data) {
+    try {
+      const response = await api.post("/request", data)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default helpRequestService;

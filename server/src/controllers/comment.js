@@ -27,17 +27,5 @@ export const createComment = async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not create comment" })
     }
 
-    const updatedHelpRequest = await HelpRequest.findByIdAndUpdate(
-        helpRequestId,
-        { $push: { comments: comment._id } },
-        { new: true }
-    );
-    
-    if (!updatedHelpRequest) {
-        await Comment.deleteOne({ _id: comment._id })
-        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not update help request" })
-
-    }
-
     res.status(StatusCodes.CREATED).json({ comment_id: comment._id })
 }

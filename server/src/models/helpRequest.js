@@ -7,11 +7,6 @@ export const HelpRequestSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    comments: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Comment',
-        default: []
-    },
     title: {
         type: String,
         required: true,

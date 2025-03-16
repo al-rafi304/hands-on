@@ -26,13 +26,13 @@ export const createComment = async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not create comment" })
     }
 
-    res.status(StatusCodes.CREATED).json({ comment_id: comment._id })
+    res.status(StatusCodes.CREATED).json({ comment })
 }
 
 export const getComments = async (req, res) => {
     const helpRequestId = req.params.helpRequestId;
 
-    const comments = await Comment.find({ helpRequest: helpRequestId }).populate('user', '_id name');
+    const comments = await Comment.find({ helpRequest: helpRequestId }).populate('user', '_id name').sort({ createdAt: -1 });
     if (!comments) {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid Help Request" })
     }

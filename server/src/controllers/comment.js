@@ -1,0 +1,43 @@
+import mongoose from 'mongoose';
+import User from '../models/user.js';
+import HelpRequest from '../models/helpRequest.js';
+import Comment from '../models/comment.js';
+import { StatusCodes } from 'http-status-codes';
+
+export const createComment = async (req, res) => {
+    const helpRequestId = req.params.requestId;
+    const { text } = req.body;
+    const userId = req.userId;
+
+    if (!await User.exists({ _id: userId })) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid user ID" })
+    }
+
+    if (!await HelpRequest.exists({ _id: helpRequestId })) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "Help Request not found" })
+    }
+
+    const comment = await Comment.create({
+        helpRequest: helpRequestId,
+        user: userId,
+        text: text,
+    });
+
+    if (!comment) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not create comment" })
+    }
+
+    const updatedHelpRequest = await HelpRequest.findByIdAndUpdate(
+        helpRequestId,
+        { $push: { comments: comment._id } },
+        { new: true }
+    );
+    
+    if (!updatedHelpRequest) {
+        await Comment.deleteOne({ _id: comment._id })
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not update help request" })
+
+    }
+
+    res.status(StatusCodes.CREATED).json({ comment_id: comment._id })
+}

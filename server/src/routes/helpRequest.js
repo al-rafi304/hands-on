@@ -36,6 +36,8 @@ router.route('/:requestId/close').post(
 
 router.route('/:requestId/comment').post(
     authenticate,
+    validator.comment,
+    validator.validate,
     comment.createComment
 )
 

@@ -211,6 +211,16 @@ export const requestFilters = [
         .isISO8601().withMessage('Invalid date format')
 ]
 
+export const comment = [
+    param('requestId')
+        .notEmpty().withMessage('Help Request ID is required')
+        .isMongoId().withMessage('Invalid Help Request ID')
+    ,
+    body('text')
+        .trim()
+        .notEmpty().withMessage('Comment cannot be empty')
+]
+
 export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Calendar, MapPin, Filter, Plus } from "lucide-react"
 import eventService from "../../services/eventService"
+import { CATEGORY } from "../../constants/category"
 
 const EventsPage = () => {
   const [events, setEvents] = useState([])
@@ -11,20 +12,6 @@ const EventsPage = () => {
     location: "",
   })
   const [showFilters, setShowFilters] = useState(false)
-
-  const CATEGORY = [
-    "Education",
-    "Healthcare",
-    "Environment",
-    "Human Rights",
-    "Mental Health",
-    "Arts & Culture",
-    "Animal Welfare",
-    "Disaster Relief",
-    "Technology for Good",
-    "Poverty Alleviation",
-    "Community Development",
-];
 
   useEffect(() => {
     const fetchEvents = async () => {

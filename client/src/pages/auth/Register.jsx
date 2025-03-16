@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
+import { CATEGORY } from "../../constants/category"
 import toast from "react-hot-toast"
 
 const Register = () => {
@@ -17,20 +18,6 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { register } = useAuth()
   const navigate = useNavigate()
-
-  const CATEGORY = [
-    "Education",
-    "Healthcare",
-    "Environment",
-    "Human Rights",
-    "Mental Health",
-    "Arts & Culture",
-    "Animal Welfare",
-    "Disaster Relief",
-    "Technology for Good",
-    "Poverty Alleviation",
-    "Community Development",
-];
 
   const handleChange = (e) => {
     const { name, value } = e.target

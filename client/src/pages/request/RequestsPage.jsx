@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Clock, Filter, Plus } from "lucide-react"
 import helpRequestService from "../../services/requestService"
+import { CATEGORY } from "../../constants/category"
+import { URGENCY } from "../../constants/urgency"
 
 const HelpRequestsPage = () => {
   const [helpRequests, setHelpRequests] = useState([])
@@ -42,22 +44,6 @@ const HelpRequestsPage = () => {
       category: "",
     })
   }
-
-  const CATEGORY = [
-    "Education",
-    "Healthcare",
-    "Environment",
-    "Human Rights",
-    "Mental Health",
-    "Arts & Culture",
-    "Animal Welfare",
-    "Disaster Relief",
-    "Technology for Good",
-    "Poverty Alleviation",
-    "Community Development",
-  ];
-  
-  const urgencyLevels = ["Low", "Medium", "High"]
 
   if (loading) {
     return (
@@ -105,7 +91,7 @@ const HelpRequestsPage = () => {
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md"
               >
                 <option value="">All Urgency Levels</option>
-                {urgencyLevels.map((level) => (
+                {URGENCY.map((level) => (
                   <option key={level} value={level}>
                     {level}
                   </option>

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import eventService from "../../services/eventService"
+import { CATEGORY } from "../../constants/category"
 import toast from "react-hot-toast"
 
 const CreateEvent = () => {
@@ -14,19 +15,6 @@ const CreateEvent = () => {
     category: "",
   })
 
-  const CATEGORY = [
-    "Education",
-    "Healthcare",
-    "Environment",
-    "Human Rights",
-    "Mental Health",
-    "Arts & Culture",
-    "Animal Welfare",
-    "Disaster Relief",
-    "Technology for Good",
-    "Poverty Alleviation",
-    "Community Development",
-];
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 

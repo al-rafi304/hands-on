@@ -7,6 +7,7 @@ import CreateEvent from "../event/CreateEvent"
 import EventDetails from "../event/EventDetails"
 import HelpRequestsPage from "../request/RequestsPage"
 import CreateHelpRequest from "../request/CreateHelpRequest"
+import HelpRequestDetails from "../request/HelpRequestDetails"
 
 const Dashboard = () => {
 
@@ -25,6 +26,8 @@ const Dashboard = () => {
                 <Route path="/events/:eventId" element={<EventDetails />} />
                 <Route path="/help-requests" element={<HelpRequestsPage />} />
                 <Route path="/help-requests/create" element={<CreateHelpRequest />} />
+                <Route path="/help-requests/:requestId" element={<HelpRequestDetails />} />
+
               </Routes>
             </div>
           </div>

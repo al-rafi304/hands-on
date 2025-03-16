@@ -24,6 +24,15 @@ const helpRequestService = {
     } catch (error) {
       throw error
     }
+  },
+
+  async getHelpRequestById(requestId) {
+    try {
+      const response = await api.get(`/request/${requestId}`)
+      return response.data.helpRequest
+    } catch (error) {
+      throw error
+    }
   }
 }
 

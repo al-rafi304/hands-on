@@ -180,7 +180,7 @@ const HelpRequestsPage = () => {
                     <div className="mt-2 flex justify-between">
                       <span className="text-sm text-gray-500">Category: {request.category}</span>
                       <span className="text-sm text-gray-500">
-                        {request.comments.length} {request.comments.length === 1 ? "comment" : "comments"}
+                        {/* {request.comments.length} {request.comments.length === 1 ? "comment" : "comments"} */}
                       </span>
                     </div>
                   </div>

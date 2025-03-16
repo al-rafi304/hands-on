@@ -12,7 +12,7 @@ export const CommentSchema = new mongoose.Schema({
         ref: 'HelpRequest',
         required: true
     },
-    comment: {
+    text: {
         type: String,
         required: true,
         trim: true,

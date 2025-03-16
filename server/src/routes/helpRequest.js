@@ -1,6 +1,5 @@
 import { Router } from "express";
 import * as helpRequest from "../controllers/helpRequest.js";
-import * as comment from "../controllers/comment.js";
 import * as validator from "../validators.js";
 import { authenticate } from "../middlewares/auth.js";
 
@@ -33,12 +32,5 @@ router.route('/:requestId/close').post(
     validator.validate,
     helpRequest.closeRequest
 );
-
-router.route('/:requestId/comment').post(
-    authenticate,
-    validator.comment,
-    validator.validate,
-    comment.createComment
-)
 
 export default router;

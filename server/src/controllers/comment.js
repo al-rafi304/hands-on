@@ -1,11 +1,10 @@
-import mongoose from 'mongoose';
 import User from '../models/user.js';
 import HelpRequest from '../models/helpRequest.js';
 import Comment from '../models/comment.js';
 import { StatusCodes } from 'http-status-codes';
 
 export const createComment = async (req, res) => {
-    const helpRequestId = req.params.requestId;
+    const helpRequestId = req.params.helpRequestId;
     const { text } = req.body;
     const userId = req.userId;
 
@@ -28,4 +27,15 @@ export const createComment = async (req, res) => {
     }
 
     res.status(StatusCodes.CREATED).json({ comment_id: comment._id })
+}
+
+export const getComments = async (req, res) => {
+    const helpRequestId = req.params.helpRequestId;
+
+    const comments = await Comment.find({ helpRequest: helpRequestId }).populate('user', '_id name');
+    if (!comments) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid Help Request" })
+    }
+
+    res.status(StatusCodes.OK).json({ comments })
 }

@@ -227,6 +227,12 @@ export const getComment = [
         .isMongoId().withMessage('Invalid Help Request ID')
 ]
 
+export const like = [
+    param('commentId')
+        .notEmpty().withMessage('Help Request ID is required')
+        .isMongoId().withMessage('Invalid Help Request ID')
+]
+
 export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

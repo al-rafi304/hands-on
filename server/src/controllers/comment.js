@@ -37,7 +37,7 @@ export const getComments = async (req, res) => {
 
     const comments = await Comment.aggregate([
         { $match: { helpRequest: new mongoose.Types.ObjectId(String(helpRequestId)) } },
-        { $sort: { createdAt: 1 } },
+        { $sort: { createdAt: -1 } },
         
         // Joining Likes and Comment 
         {

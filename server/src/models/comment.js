@@ -17,10 +17,6 @@ export const CommentSchema = new mongoose.Schema({
         required: true,
         trim: true,
         maxlength: 1000
-    },
-    likes: {
-        type: Number,
-        default: 0
     }
 }, {
     timestamps: true

@@ -11,6 +11,7 @@ import userRoutes from './routes/user.js';
 import eventRoutes from './routes/event.js';
 import requestRoutes from './routes/helpRequest.js';
 import commentRoutes from './routes/comment.js';
+import likeRoutes from './routes/like.js';
 
 const server = express();
 const corsOptions = {
@@ -33,6 +34,7 @@ const start = async () => {
     server.use(`${constant.BASE_API_ROUTE}/event`, eventRoutes);
     server.use(`${constant.BASE_API_ROUTE}/request`, requestRoutes);
     server.use(`${constant.BASE_API_ROUTE}/comment`, commentRoutes);
+    server.use(`${constant.BASE_API_ROUTE}/like`, likeRoutes);
     
     await db.connectDB();
     server.listen(env.SERVER_PORT, () => {

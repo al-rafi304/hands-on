@@ -9,4 +9,9 @@ router.route('/:commentId').post(
     like.likeComment
 )
 
+router.route('/:commentId').delete(
+    authenticate,
+    like.unlikeComment
+)
+
 export default router;

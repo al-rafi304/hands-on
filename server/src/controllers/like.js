@@ -29,3 +29,13 @@ export const likeComment = async (req, res) => {
 
     return res.status(StatusCodes.OK).json({ msg: "Like added" })
 }
+
+export const unlikeComment = async (req, res) => {
+    const commentId = req.params.commentId;
+
+    const like = await Like.findOneAndDelete({ user: req.userId, comment: commentId });
+    if (!like) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "Like not found" })
+    }
+    res.status(StatusCodes.OK).json({ msg: "Like removed" });
+}

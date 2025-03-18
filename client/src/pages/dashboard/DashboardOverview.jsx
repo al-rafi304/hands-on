@@ -33,7 +33,7 @@ const DashboardOverview = () => {
         setStats({
           upcomingEvents: upcomingEvents.length,
           helpRequests: 4, // Simulated data
-          volunteerHours: 24, // Simulated data
+          volunteerHours: currentUser.totalHours, // Simulated data
         })
       } catch (error) {
         console.error("Error fetching dashboard data:", error)

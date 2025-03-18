@@ -69,7 +69,36 @@ const eventService = {
     } catch (error) {
       throw error
     }
-  }
+  },
+  
+  async logVolunteerHours(eventId, hours) {
+    try {
+      const response = await api.post(`/event/${eventId}/log-hours`, { hours })
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  },
+
+  
+  async getVerificationRequests(eventId) {
+    try {
+      const response = await api.get(`/event/${eventId}/verifications`)
+      return response.data.logs
+    } catch (error) {
+      throw error
+    }
+  },
+
+  
+  async verifyHours(verificationId) {
+    try {
+      const response = await api.post(`/log/${verificationId}/verify`)
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  },
 }
 
 export default eventService;

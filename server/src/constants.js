@@ -18,4 +18,7 @@ export const URGENCY = [
     "High"
 ]
 
+export const PEER_VERIFICATION_COUNT = 3;
+export const POINT_MULTIPLIER = 5;
+
 export const BASE_API_ROUTE = '/api/v1';

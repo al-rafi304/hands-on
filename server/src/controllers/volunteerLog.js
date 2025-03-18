@@ -2,6 +2,7 @@ import VolunteerLog from "../models/volunteerLog.js";
 import Event from "../models/event.js";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/user.js";
+import mongoose from "mongoose";
 
 export const logHours = async (req, res) => {
     const { hours } = req.body;
@@ -12,7 +13,7 @@ export const logHours = async (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
     }
 
-    if(!await User.exists({ _id: req.userId })) {
+    if (!await User.exists({ _id: req.userId })) {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
     }
 
@@ -28,9 +29,9 @@ export const logHours = async (req, res) => {
         }
 
         res.status(StatusCodes.CREATED).json({ id: log._id });
-    
+
     } catch (err) {
-        if (err.code === 11000) return res.status(StatusCodes.BAD_REQUEST).json({ error: "Already logged"})
+        if (err.code === 11000) return res.status(StatusCodes.BAD_REQUEST).json({ error: "Already logged" })
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Something went wrong" });
     }
 }
@@ -43,7 +44,38 @@ export const getVerifyRequests = async (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "Event not found" });
     }
 
-    const logs = await VolunteerLog.find({ event: eventId }).populate('user', '_id name');
+    // const logs = await VolunteerLog.find({ event: eventId }).populate('user', '_id name');
+
+    const logs = await VolunteerLog.aggregate([
+        { $match: { event: new mongoose.Types.ObjectId(eventId) } },
+        {
+            $lookup: {
+                from: 'users',
+                foreignField: '_id',
+                localField: 'user',
+                as: 'user',
+                pipeline: [{
+                    $project: {
+                        "_id": 1,
+                        "name": 1
+                    }
+                }]
+            }
+        },
+        {
+            $unwind: "$user"
+        },
+        { $addFields: {
+            hasVerified: {
+                $cond: {
+                    if: { $in: [new mongoose.Types.ObjectId(String(req.userId)), "$peerVerifications"] },
+                    then: true,
+                    else: false
+                }
+            }
+        } }
+    ])
+
     if (!logs) {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "Logs not found" });
     }

@@ -24,6 +24,11 @@ router.route('/attending').get(
     event.getAttendingEvents,
 );
 
+router.route('/organized').get(
+    authenticate,
+    event.getOrganizedEvents,
+);
+
 router.route('/:eventId').get(
     validator.getEvent,
     validator.validate,

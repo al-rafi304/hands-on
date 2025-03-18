@@ -109,3 +109,14 @@ export const getAttendingEvents = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ events });
 }
+
+export const getOrganizedEvents = async (req, res) => {
+    const userId = req.userId;
+
+    const events = await Event.find({ organizer: userId });
+    if (!events) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "No events found" });
+    }
+
+    res.status(StatusCodes.OK).json({ events });
+}

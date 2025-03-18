@@ -21,7 +21,8 @@ const DashboardOverview = () => {
 
         // Fetch user events
         const userEvents = await eventService.getAttendingEvents()
-        setRecentEvents(userEvents)
+        const upcomingEvents = userEvents.filter(event => new Date(event.date) > new Date())
+        setRecentEvents(upcomingEvents)
         // setRecentEvents(userEvents.slice(0, 3))
 
         // Fetch help requests
@@ -30,7 +31,7 @@ const DashboardOverview = () => {
 
         // Set stats
         setStats({
-          upcomingEvents: userEvents.filter((event) => new Date(event.date) > new Date()).length,
+          upcomingEvents: upcomingEvents.length,
           helpRequests: 4, // Simulated data
           volunteerHours: 24, // Simulated data
         })
@@ -247,13 +248,12 @@ const DashboardOverview = () => {
                         <p className="text-sm font-medium text-primary truncate">{request.title}</p>
                         <div className="ml-2 flex-shrink-0 flex">
                           <p
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              request.urgency === "High"
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${request.urgency === "High"
                                 ? "bg-red-100 text-red-800"
                                 : request.urgency === "Medium"
                                   ? "bg-yellow-100 text-yellow-800"
                                   : "bg-green-100 text-green-800"
-                            }`}
+                              }`}
                           >
                             {request.urgency}
                           </p>

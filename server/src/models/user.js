@@ -35,14 +35,6 @@ const UserSchema = new mongoose.Schema({
         type: [String],
         enum: constants.CATEGORY,
         default: []
-    },
-    volunteerHours: {
-        type: Number,
-        default: 0
-    },
-    points: {
-        type: Number,
-        default: 0
     }
 });
 

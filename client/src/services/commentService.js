@@ -18,6 +18,15 @@ const commentService = {
     } catch (error) {
       throw error
     }
+  },
+
+  async likeComment(commentId) {
+    try {
+      const response = await api.post(`/like/${commentId}`)
+      return response.data
+    } catch (error) {
+      throw error
+    }
   }
 }
 

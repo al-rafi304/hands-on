@@ -57,20 +57,20 @@ const HelpRequestDetails = () => {
     }
   }
 
-  // const handleLikeComment = async (commentId) => {
-  //   setLikeLoading((prev) => ({ ...prev, [commentId]: true }))
-  //   try {
-  //     await commentService.likeComment(commentId)
-  //     setComments(
-  //       comments.map((comment) => (comment._id === commentId ? { ...comment, likes: comment.likes + 1 } : comment)),
-  //     )
-  //   } catch (error) {
-  //     console.error("Error liking comment:", error)
-  //     toast.error("Failed to like comment")
-  //   } finally {
-  //     setLikeLoading((prev) => ({ ...prev, [commentId]: false }))
-  //   }
-  // }
+  const handleLikeComment = async (commentId) => {
+    setLikeLoading((prev) => ({ ...prev, [commentId]: true }))
+    try {
+      await commentService.likeComment(commentId)
+      setComments(
+        comments.map((comment) => (comment._id === commentId ? { ...comment, likes: comment.likes + 1 } : comment)),
+      )
+    } catch (error) {
+      console.error("Error liking comment:", error)
+      // toast.error("Failed to like comment")
+    } finally {
+      setLikeLoading((prev) => ({ ...prev, [commentId]: false }))
+    }
+  }
 
   const getUrgencyColor = (urgency) => {
     switch (urgency) {
@@ -270,7 +270,7 @@ const HelpRequestDetails = () => {
                           <p className="text-sm font-medium text-gray-900">{comment.user.name}</p>
                           <p className="text-xs text-gray-500">{formatDate(comment.createdAt)}</p>
                         </div>
-                        {/* <button
+                        <button
                           onClick={() => handleLikeComment(comment._id)}
                           disabled={likeLoading[comment._id]}
                           className="inline-flex items-center text-sm text-gray-500 hover:text-primary"
@@ -283,7 +283,7 @@ const HelpRequestDetails = () => {
                               <span>{comment.likes}</span>
                             </>
                           )}
-                        </button> */}
+                        </button>
                       </div>
                       <div className="mt-2 text-sm text-gray-700">
                         <p>{comment.text}</p>

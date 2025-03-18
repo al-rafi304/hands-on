@@ -49,6 +49,19 @@ export const getComments = async (req, res) => {
             }
         },
 
+        // Adding has_liked field based on whether userId exist in likes array
+        {
+            $addFields: {
+                has_liked: {
+                    $cond: {
+                        if: { $in: [new mongoose.Types.ObjectId(String(req.userId)), "$likes.user"] },
+                        then: true,
+                        else: false
+                    }
+                }
+            }
+        },
+
         // Summing the 'likes' array and overwriting it with the count
         {
             $addFields: {

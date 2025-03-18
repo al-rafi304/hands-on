@@ -136,7 +136,7 @@ const EventDetails = () => {
                 <button
                   onClick={handleJoinLeave}
                   disabled={joining || new Date(eventData.date) < new Date()}
-                  className={`inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-bold ${hasJoined ? "bg-red-600 hover:bg-red-700 text-white" : "bg-gray-800 hover:bg-primary-dark text-white"
+                  className={`inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-bold ${!hasJoined || new Date(eventData.date) < new Date() ? "bg-gray-800 hover:bg-primary-dark text-white" : "bg-red-600 hover:bg-red-700 text-white"
                     } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50`}
                 >
                   {new Date(eventData.date) < new Date() ? (

@@ -149,9 +149,9 @@ const EventsPage = () => {
                   <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                   <span>{event.location}</span>
                 </div>
-                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer.name }</div>
+                <div className="mt-2 text-sm text-gray-500">Organized by: {event.organizer.name}</div>
               </div>
-              <div className="bg-gray-50 px-5 py-3">
+              <div className="bg-gray-50 px-5 py-3 flex-shrink-0 flex justify-between">
                 <div className="text-sm">
                   <Link
                     to={`/dashboard/events/${event._id}`}
@@ -160,6 +160,13 @@ const EventsPage = () => {
                     View details
                   </Link>
                 </div>
+                {
+                  new Date(event.date) < new Date() ? <div className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                    Ended
+                  </div>
+                    :
+                    <></>
+                }
               </div>
             </div>
           ))}

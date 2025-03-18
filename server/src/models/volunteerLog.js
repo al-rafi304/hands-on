@@ -19,9 +19,10 @@ const VolunteerLogSchema = new mongoose.Schema({
     },
     peerVerifications: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: []
     }]
-}, { timestamps: true });
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 VolunteerLogSchema.virtual("verified").get(function () {
     return this.peerVerifications.length >= constants.PEER_VERIFICATION_COUNT;

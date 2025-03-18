@@ -16,14 +16,18 @@ export const logHours = async (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
     }
 
-    const log = await VolunteerLog.create({
-        user: req.userId,
-        event: eventId,
-        hours: hours
-    })
-
-    if (!log) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not log hours!" });
+    try {
+        const log = await VolunteerLog.create({
+            user: req.userId,
+            event: eventId,
+            hours: hours
+        })
+        if (!log) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: "Could not log hours!" });
+        }
+    } catch (err) {
+        if (err.code === 11000) return res.status(StatusCodes.BAD_REQUEST).json({ error: "Already logged"})
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Something went wrong" });
     }
 
     res.status(StatusCodes.CREATED).json({ id: log._id });

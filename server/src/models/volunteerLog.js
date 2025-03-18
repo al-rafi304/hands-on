@@ -28,4 +28,6 @@ VolunteerLogSchema.virtual("verified").get(function () {
     return this.peerVerifications.length >= constants.PEER_VERIFICATION_COUNT;
   });
 
+VolunteerLogSchema.index({ user: 1, event: 1 }, { unique: true })
+
 export default mongoose.model('VolunteerLog', VolunteerLogSchema);

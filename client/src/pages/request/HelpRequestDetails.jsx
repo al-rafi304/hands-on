@@ -45,7 +45,7 @@ const HelpRequestDetails = () => {
     try {
       const response = await commentService.addComment(requestId, newComment)
       var resData = response.comment
-      resData.user = {_id: resData.user, name: currentUser.name}
+      resData.user = { _id: resData.user, name: currentUser.name }
       setComments([response.comment, ...comments])
       setNewComment("")
       toast.success("Comment added successfully")
@@ -62,11 +62,26 @@ const HelpRequestDetails = () => {
     try {
       await commentService.likeComment(commentId)
       setComments(
-        comments.map((comment) => (comment._id === commentId ? { ...comment, likes: comment.likes + 1 } : comment)),
+        comments.map((comment) => (comment._id === commentId ? { ...comment, likes: comment.likes + 1, has_liked: true } : comment)),
       )
     } catch (error) {
       console.error("Error liking comment:", error)
       // toast.error("Failed to like comment")
+    } finally {
+      setLikeLoading((prev) => ({ ...prev, [commentId]: false }))
+    }
+  }
+
+  const handleUnlikeComment = async (commentId) => {
+    setLikeLoading((prev) => ({ ...prev, [commentId]: true }))
+    try {
+      await commentService.unlikeComment(commentId)
+      setComments(
+        comments.map((comment) => (comment._id === commentId ? { ...comment, likes: comment.likes - 1, has_liked: false } : comment)),
+      )
+    } catch (error) {
+      console.error("Error unliking comment:", error)
+      // toast.error("Failed to unlike comment")
     } finally {
       setLikeLoading((prev) => ({ ...prev, [commentId]: false }))
     }
@@ -271,7 +286,7 @@ const HelpRequestDetails = () => {
                           <p className="text-xs text-gray-500">{formatDate(comment.createdAt)}</p>
                         </div>
                         <button
-                          onClick={() => handleLikeComment(comment._id)}
+                          onClick={() => comment.has_liked ? handleUnlikeComment(comment._id) : handleLikeComment(comment._id)}
                           disabled={likeLoading[comment._id]}
                           className="inline-flex items-center text-sm text-gray-500 hover:text-primary"
                         >
@@ -279,7 +294,9 @@ const HelpRequestDetails = () => {
                             <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-primary"></div>
                           ) : (
                             <>
-                              <ThumbsUp className="h-4 w-4 mr-1" />
+                              {comment.has_liked ?
+                                <ThumbsUp className="h-4 w-4 mr-1 fill-gray-500" />
+                                : <ThumbsUp className="h-4 w-4 mr-1" />}
                               <span>{comment.likes}</span>
                             </>
                           )}

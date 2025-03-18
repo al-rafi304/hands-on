@@ -27,6 +27,15 @@ const commentService = {
     } catch (error) {
       throw error
     }
+  },
+
+  async unlikeComment(commentId) {
+    try {
+      const response = await api.delete(`/like/${commentId}`)
+      return response.data
+    } catch (error) {
+      throw error
+    }
   }
 }
 

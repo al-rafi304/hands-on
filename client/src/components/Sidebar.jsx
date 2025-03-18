@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { Home, Calendar, HelpCircle, Users, Award, Settings } from "lucide-react"
+import { Home, Calendar, HelpCircle, Users, BookOpen, Award, Settings } from "lucide-react"
 
 const Sidebar = () => {
   const location = useLocation()
@@ -10,7 +10,8 @@ const Sidebar = () => {
 
   const menuItems = [
     { name: "Overview", icon: Home, path: "/dashboard" },
-    { name: "Events", icon: Calendar, path: "/dashboard/events" },
+    { name: "Events", icon: BookOpen, path: "/dashboard/events" },
+    { name: "My Events", icon: Calendar, path: "/dashboard/my-events" },
     { name: "Help Requests", icon: HelpCircle, path: "/dashboard/help-requests" },
     { name: "Impact", icon: Award, path: "/dashboard/impact" },
     { name: "Settings", icon: Settings, path: "/dashboard/settings" },

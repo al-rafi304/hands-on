@@ -35,6 +35,15 @@ const eventService = {
     }
   },
 
+  async getOrganizedEvents() {
+    try {
+      const response = await api.get("/event/organized")
+      return response.data.events
+    } catch (error) {
+      throw error
+    }
+  },
+
   async createEvent(eventData) {
     try {
       const response = await api.post("/event", eventData)

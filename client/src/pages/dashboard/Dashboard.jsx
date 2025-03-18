@@ -5,6 +5,7 @@ import DashboardOverview from "./DashboardOverview"
 import EventsPage from "../event/EventsPage"
 import CreateEvent from "../event/CreateEvent"
 import EventDetails from "../event/EventDetails"
+import MyEvents from "../event/MyEvents"
 import HelpRequestsPage from "../request/RequestsPage"
 import CreateHelpRequest from "../request/CreateHelpRequest"
 import HelpRequestDetails from "../request/HelpRequestDetails"
@@ -22,6 +23,7 @@ const Dashboard = () => {
               <Routes>
                 <Route path="/" element={<DashboardOverview />} />
                 <Route path="/events" element={<EventsPage />} />
+                <Route path="/my-events" element={<MyEvents />} />
                 <Route path="/events/create" element={<CreateEvent />} />
                 <Route path="/events/:eventId" element={<EventDetails />} />
                 <Route path="/help-requests" element={<HelpRequestsPage />} />

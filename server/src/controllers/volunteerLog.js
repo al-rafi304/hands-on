@@ -44,3 +44,22 @@ export const getVerifyRequests = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ logs });
 }
+
+export const verifyhours = async (req, res) => {
+    const logId = req.params.logId;
+    const userId = req.userId;
+
+    const log = await VolunteerLog.findById(logId);
+    if (!log) {
+        return res.status(StatusCodes.NOT_FOUND).json({ error: "Log not found" });
+    }
+
+    if (log.peerVerifications.includes(userId)) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: "Already verified" });
+    }
+
+    log.peerVerifications.push(userId);
+    await log.save();
+
+    res.status(StatusCodes.OK).json({ msg: "Peer Verification successful" });
+}
